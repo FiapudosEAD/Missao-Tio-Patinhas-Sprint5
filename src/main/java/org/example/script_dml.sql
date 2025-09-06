@@ -1,5 +1,4 @@
 -- Script DML para popular as tabelas
--- Feito pelo grupo para a Sprint 5
 
 -- Inserindo alguns clientes para teste
 INSERT INTO TB_CLIENTE (NOME, EMAIL, CPF, TELEFONE) VALUES ('João Silva', 'joao@email.com', '12345678901', '11999887766');
@@ -8,7 +7,7 @@ INSERT INTO TB_CLIENTE (NOME, EMAIL, CPF, TELEFONE) VALUES ('Pedro', 'pedro123@g
 INSERT INTO TB_CLIENTE (NOME, EMAIL, CPF, TELEFONE) VALUES ('Ana Costa', 'ana.costa@yahoo.com.br', '55566677788', '11666554433');
 INSERT INTO TB_CLIENTE (NOME, EMAIL, CPF, TELEFONE) VALUES ('Carlos Pereira', 'carlos.p@outlook.com', '99988877766', '11555443322');
 
--- produtos da loja
+-- Produtos da loja
 INSERT INTO TB_PRODUTO (NOME, PRECO) VALUES ('Notebook', 2500.99);
 INSERT INTO TB_PRODUTO (NOME, PRECO) VALUES ('Mouse', 50.00);
 INSERT INTO TB_PRODUTO (NOME, PRECO) VALUES ('Teclado', 120.50);
@@ -16,13 +15,13 @@ INSERT INTO TB_PRODUTO (NOME, PRECO) VALUES ('Monitor', 800.00);
 INSERT INTO TB_PRODUTO (NOME, PRECO) VALUES ('Webcam', 150.99);
 INSERT INTO TB_PRODUTO (NOME, PRECO) VALUES ('Fone', 200.00);
 
--- alguns pedidos
+-- Alguns pedidos
 INSERT INTO TB_PEDIDO (ID_CLIENTE, VALOR_TOTAL) VALUES (1, 2550.99);
 INSERT INTO TB_PEDIDO (ID_CLIENTE, VALOR_TOTAL) VALUES (2, 170.50);
 INSERT INTO TB_PEDIDO (ID_CLIENTE, VALOR_TOTAL) VALUES (3, 350.99);
 INSERT INTO TB_PEDIDO (ID_CLIENTE, VALOR_TOTAL) VALUES (1, 800.00);
 
--- itens dos pedidos
+-- Itens dos pedidos
 INSERT INTO TB_ITEM_PEDIDO (ID_PEDIDO, ID_PRODUTO, QUANTIDADE, SUBTOTAL) VALUES (1, 1, 1, 2500.99);
 INSERT INTO TB_ITEM_PEDIDO (ID_PEDIDO, ID_PRODUTO, QUANTIDADE, SUBTOTAL) VALUES (1, 2, 1, 50.00);
 INSERT INTO TB_ITEM_PEDIDO (ID_PEDIDO, ID_PRODUTO, QUANTIDADE, SUBTOTAL) VALUES (2, 3, 1, 120.50);
@@ -33,60 +32,60 @@ INSERT INTO TB_ITEM_PEDIDO (ID_PEDIDO, ID_PRODUTO, QUANTIDADE, SUBTOTAL) VALUES 
 
 -- Comandos UPDATE
 
--- mudando telefone do joao
+-- Mudando telefone do João
 UPDATE TB_CLIENTE SET TELEFONE = '11888999000' WHERE ID_CLIENTE = 1;
 
--- atualizando preco
+-- Atualizando preços
 UPDATE TB_PRODUTO SET PRECO = 2400.00 WHERE ID_PRODUTO = 1;
 
--- corrigindo valor do pedido
+-- Corrigindo valor do pedido
 UPDATE TB_PEDIDO SET VALOR_TOTAL = 2000.00 WHERE ID_PEDIDO = 1;
 
--- nome completo
+-- Nome completo 
 UPDATE TB_CLIENTE SET NOME = 'João da Silva' WHERE ID_CLIENTE = 1;
 
 -- Comandos DELETE
 
--- deletando um item
+-- Deletando um item
 DELETE FROM TB_ITEM_PEDIDO WHERE ID_ITEM = 7;
 
--- removendo produto
+-- Removendo produto 
 DELETE FROM TB_PRODUTO WHERE ID_PRODUTO = 6;
 
--- excluindo cliente e seus dados
+-- Excluindo cliente e seus dados
 DELETE FROM TB_ITEM_PEDIDO WHERE ID_PEDIDO IN (SELECT ID_PEDIDO FROM TB_PEDIDO WHERE ID_CLIENTE = 5);
 DELETE FROM TB_PEDIDO WHERE ID_CLIENTE = 5;
 DELETE FROM TB_CLIENTE WHERE ID_CLIENTE = 5;
 
 -- Comandos SELECT
 
--- ver todos os clientes
+-- Ver todos os clientes
 SELECT * FROM TB_CLIENTE;
 
--- listar produtos
+-- Listar produtos
 SELECT * FROM TB_PRODUTO;
 
--- pedidos com cliente
+-- Pedidos com cliente
 SELECT p.ID_PEDIDO, c.NOME, p.VALOR_TOTAL
 FROM TB_PEDIDO p, TB_CLIENTE c
 WHERE p.ID_CLIENTE = c.ID_CLIENTE;
 
--- itens do pedido 1
+-- Itens do pedido 1
 SELECT pr.NOME, ip.QUANTIDADE, ip.SUBTOTAL
 FROM TB_ITEM_PEDIDO ip, TB_PRODUTO pr
 WHERE ip.ID_PRODUTO = pr.ID_PRODUTO
 AND ip.ID_PEDIDO = 1;
 
--- pedidos acima de 500 reais
+-- Pedidos acima de 500 reais
 SELECT * FROM TB_PEDIDO WHERE VALOR_TOTAL > 500;
 
--- contar quantos clientes temos
+-- Contar quantos clientes temos
 SELECT COUNT(*) FROM TB_CLIENTE;
 
--- produto mais caro
+-- Produto mais caro
 SELECT * FROM TB_PRODUTO WHERE PRECO = (SELECT MAX(PRECO) FROM TB_PRODUTO);
 
--- todos os dados de um pedido
+-- Todos os dados de um pedido
 SELECT c.NOME, pr.NOME, ip.QUANTIDADE, ip.SUBTOTAL
 FROM TB_CLIENTE c, TB_PEDIDO p, TB_ITEM_PEDIDO ip, TB_PRODUTO pr
 WHERE c.ID_CLIENTE = p.ID_CLIENTE
